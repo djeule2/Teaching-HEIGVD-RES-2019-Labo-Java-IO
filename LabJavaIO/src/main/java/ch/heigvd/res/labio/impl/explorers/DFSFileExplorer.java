@@ -3,6 +3,7 @@ package ch.heigvd.res.labio.impl.explorers;
 import ch.heigvd.res.labio.interfaces.IFileExplorer;
 import ch.heigvd.res.labio.interfaces.IFileVisitor;
 import java.io.File;
+import java.util.LinkedList;
 
 /**
  * This implementation of the IFileExplorer interface performs a depth-first
@@ -16,7 +17,31 @@ public class DFSFileExplorer implements IFileExplorer {
 
   @Override
   public void explore(File rootDirectory, IFileVisitor vistor) {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    vistor.visit(rootDirectory);
+    //declare the tab of file to directorie
+    File List[] = rootDirectory.listFiles();
+    //declare le tableau de repertoire  du repertoire courant
+    LinkedList <File> repertories = new LinkedList<>();
+    //si se reppertoire est vide
+    if (List == null)
+      return;// on quitte
+    else {
+      //on parcours la liste des fichiers
+      for (int i=0; i<List.length; i++){
+        //on verifie si on a un repertoire
+        if(List[i].isDirectory())
+          repertories.add(List[i]);
+        else{
+          //sinon on visite le fichier
+          vistor.visit(List[i]);
+        }
+
+      }
+      for (File f: repertories){
+        explore(f, vistor);
+      }
+    }
   }
 
 }
